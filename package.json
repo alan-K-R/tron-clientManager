@@ -1,0 +1,31 @@
+{
+  "name": "tron-clientManager",
+  "version": "0.0.1",
+  "description": "An AngularJS desktop client Manager",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/alan-K-R/tron-clientManager.git",
+  "keywords": [
+    "client",
+    "Management",
+    "Desktop"
+  ],
+  "author": "GitHub",
+  "license": "MIT",
+  "devDependencies": {
+    "angular": "^1.6.1",
+    "angular-route": "^1.6.1",
+    "angular-utils-pagination": "^0.11.1",
+    "angular-animate": "^1.6.1",
+    "angular-material": "^1.1.1",
+    "bootstrap": "^3.3.7",
+    "electron": "^1.4.1",
+    "jquery": "^3.1.1"
+  },
+  "dependencies": {
+    "express": "^4.14.0",
+    "mysql": "^2.12.0"
+  }
+}

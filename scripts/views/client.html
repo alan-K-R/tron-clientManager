@@ -1,0 +1,71 @@
+<div class="bg-light lter b-b wrapper-md">
+    <h1 class="m-n font-thin h3"><img src="images/logo.png" width="50" height="50">clientManager</h1>
+</div>
+<div class="wrapper-md">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <input style="float: left; width: 300px;" type="search" ng-model="search"
+            class="form-control input-sm w-sm inline m-r"
+            placeholder="Global Search"/>
+            <button  style="float: right;"
+            class="btn m-b-xs btn-sm btn-success btn-addon"
+            ng-click="create($event)">
+            <i class="fa fa-refresh"></i>Create</button>
+        </div>
+        <form name="form" class="form-validation">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>address</th>
+                        <th>telephone</th>
+                        <th>email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <input ng-model="client.id" placeholder="//auto" type="text" class="form-control input-sm" disabled >
+                        </td>
+                        <td>
+                            <input ng-model="client.name" placeholder="Name client" type="text" class="form-control input-sm" required >
+                        </td>
+                        <td>
+                            <input ng-model="client.address" placeholder="Address" type="text" class="form-control input-sm" required >
+                        </td>
+                        <td>
+                            <input ng-model="client.telephone" placeholder="Telephone" type="text" class="form-control input-sm" required >
+                        </td>
+                        <td>
+                            <input ng-model="client.email" placeholder="Email" type="text" class="form-control input-sm" required >
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-success btn-sm" ng-click="save()" ng-disabled="form.$invalid">{{button}}</button>
+                        </td>
+
+                    </tr>
+                    <tr dir-paginate="data in datas|filter:search|itemsPerPage: 5" >
+                        <td style="width: 100px">{{data.id}}</td>
+                        <td>{{data.name}}</td>
+                        <td>{{data.address}}</td>
+                        <td style="width: 100px">{{data.telephone}}</td>
+                        <td style="width: 100px">{{data.email}}</td>
+                        <td style="width:150px">
+                            <button class="btn btn-info btn-xs" ng-click="click(data)"><i class="glyphicon glyphicon-edit"></i></button>
+                            <button class="btn btn-danger btn-xs" ng-click="remove(data.id)"><i class="glyphicon glyphicon-trash"></i></button>
+                        </td>
+                    </tr>
+
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="5" class="text-center">
+                <dir-pagination-controls boundary-links="true"></dir-pagination-controls>
+                </td>
+                </tr>
+                </tfoot>
+            </table>
+        </form>
+    </div>
+</div>
