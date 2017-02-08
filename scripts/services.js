@@ -1,11 +1,10 @@
 (function () {
-  //didnt add notes on how to create database yet but do need one..
     'use strict';
     var req = require('mysql');
     var connection = req.createConnection({
         host: "127.0.0.1",
         user: "root",
-        password: "<yourPassword>",
+        password: "XXXX",
         database: "clients"
     });
     var app = angular.module('services', []);
@@ -16,10 +15,12 @@
             return result(null, 'select * from client');
         };
         mysql.insert = function (data) {
-            return result([data.name, data.email, data.telephone], 'insert into client(name,email,telephone) values(?,?,?)');
+            return result([data.name, data.email, data.address, data.telephone],
+               'insert into client(name,email, address,telephone) values(?,?,?)');
         };
         mysql.update = function (data) {
-            return result([data.name, data.position, data.gol, data.id], 'update client set name=?,address=?,telephone=?, email=? where id=?');
+            return result([data.name, data.email, data.address, data.telephone, data.id],
+               'update client set name=?,email=?,address=?, telephone=? where id=?');
         };
         mysql.delete = function (id) {
             var def = $q.defer();

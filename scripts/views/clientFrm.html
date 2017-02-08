@@ -1,12 +1,12 @@
-<md-dialog aria-label="New Client" ng-cloak class="appdialog" ng-init="clientfrmctrl.init()">
+<md-dialog aria-label="New Client" class="appdialog">
 
-    <form name="clientFrm" novalidate ng-submit="clientfrmctrl.save()">
+    <form name="clientFrm" novalidate>
         <md-toolbar>
             <div class="md-toolbar-tools">
-                <h2>PRESS ENTER TO SEE THE ISSUE</h2>
-                <span flex></span>
-                <md-button class="md-icon-button" ng-click="clientfrmctrl.cancel()">
-                    <md-icon md-font-set="material-icons" aria-label="Close dialog">close</md-icon>
+                <span flex>Create Client</span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <ng-md-icon icon="clear" aria-label="Close dialog">
+                    </ng-md-icon>
                 </md-button>
             </div>
         </md-toolbar>
@@ -14,19 +14,19 @@
 
             <!-- NAME -->
             <md-input-container class="md-block">
-                <label>Client Name</label>
-                <input md-maxlength="255" required name="name" ng-model="clientfrmctrl.client.name" class="dialog-close">
-                <div ng-messages="clientForm.name.$error">
+                <label>Name</label>
+                <input md-maxlength="255" required name="name" ng-model="client.name" class="dialog-close">
+                <div ng-messages="clientFrm.name.$error">
                     <div ng-message="required">This is required.</div>
                     <div ng-message="md-maxlength">The name has to be less than 255 characters long.</div>
                 </div>
             </md-input-container>
 
-            <!-- ORGANIZATION -->
+            <!-- Address -->
             <md-input-container class="md-block">
-                <label>Client Organization</label>
-                <input md-maxlength="255" required name="organization" ng-model="clientfrmctrl.client.organization">
-                <div ng-messages="clientForm.organization.$error">
+                <label>Address</label>
+                <input md-maxlength="255" required name="address" ng-model="client.address">
+                <div ng-messages="clientFrm.address.$error">
                     <div ng-message="required">This is required.</div>
                     <div ng-message="md-maxlength">The name has to be less than 255 characters long.</div>
                 </div>
@@ -34,22 +34,40 @@
 
             <!-- EMAIL -->
             <md-input-container class="md-block">
-                <label>Contact Email</label>
-                <input required type="email" name="email" ng-model="clientfrmctrl.client.email"
+                <label>Email</label>
+                <input required type="email" name="email" ng-model="client.email"
                        md-minlength="10" md-maxlength="255" ng-pattern="/^.+@.+\..+$/" />
-                <div ng-messages="clientForm.email.$error" role="alert">
+                <div ng-messages="clientFrm.email.$error" role="alert">
                     <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
                         Your email must be between 10 and 255 characters long and look like an e-mail address.
                     </div>
                 </div>
             </md-input-container>
+              <md-input-container class="md-block">
+                   <!-- <input id="input-file-id" type="file" accept="image/*" /> -->
+                   <input id="fileInput" type="file" class="ng-hide">
+                   <md-button id="uploadButton" class="md-raised md-primary" aria-label="attach_file">
+                         Choose file </md-button><md-input-container  md-no-float>    
+                           <input id="textInput" ng-model="fileName" type="text"
+                           placeholder="No file chosen" ng-readonly="true">
+                         </md-input-container>'
+                  <!-- <aps-upload-file></aps-upload-file> -->
+              </md-input-container>
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end">
-            <md-button ng-click="clientfrmctrl.cancel()" type="button">
+            <md-button ng-click="cancel()" type="button">
                 Cancel
             </md-button>
-            <md-button ng-disabled="clientForm.$invalid" type="submit" class="md-primary">
+            <md-button ng-disabled="clientFrm.$invalid"
+                        ng-click ="save()" class="md-primary"
+                        ng-class="{'hidden': !selected.length == 0}">
                 Save
+            </md-button>
+            <md-button ng-disabled="clientFrm.$invalid"
+                        ng-click ="updateClientDB()"
+                         class="md-primary"
+                        ng-class="{'hidden': selected.length == 0}">
+                Update
             </md-button>
         </md-dialog-actions>
     </form>

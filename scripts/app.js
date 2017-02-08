@@ -6,7 +6,9 @@
         'angularUtils.directives.dirPagination',
         'services',
         'controllers',
-        'ngRoute'
+        'ngRoute',
+        'md.data.table',
+        'ngMdIcons'
     ]);
 
     app.config(['$routeProvider', function ($routeProvider) {

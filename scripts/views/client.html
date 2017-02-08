@@ -1,71 +1,98 @@
-<div class="bg-light lter b-b wrapper-md">
-    <h1 class="m-n font-thin h3"><img src="images/logo.png" width="50" height="50">clientManager</h1>
-</div>
-<div class="wrapper-md">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <input style="float: left; width: 300px;" type="search" ng-model="search"
-            class="form-control input-sm w-sm inline m-r"
-            placeholder="Global Search"/>
-            <button  style="float: right;"
-            class="btn m-b-xs btn-sm btn-success btn-addon"
-            ng-click="create($event)">
-            <i class="fa fa-refresh"></i>Create</button>
-        </div>
-        <form name="form" class="form-validation">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>address</th>
-                        <th>telephone</th>
-                        <th>email</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <input ng-model="client.id" placeholder="//auto" type="text" class="form-control input-sm" disabled >
-                        </td>
-                        <td>
-                            <input ng-model="client.name" placeholder="Name client" type="text" class="form-control input-sm" required >
-                        </td>
-                        <td>
-                            <input ng-model="client.address" placeholder="Address" type="text" class="form-control input-sm" required >
-                        </td>
-                        <td>
-                            <input ng-model="client.telephone" placeholder="Telephone" type="text" class="form-control input-sm" required >
-                        </td>
-                        <td>
-                            <input ng-model="client.email" placeholder="Email" type="text" class="form-control input-sm" required >
-                        </td>
-                        <td>
-                            <button type="submit" class="btn btn-success btn-sm" ng-click="save()" ng-disabled="form.$invalid">{{button}}</button>
-                        </td>
 
-                    </tr>
-                    <tr dir-paginate="data in datas|filter:search|itemsPerPage: 5" >
-                        <td style="width: 100px">{{data.id}}</td>
-                        <td>{{data.name}}</td>
-                        <td>{{data.address}}</td>
-                        <td style="width: 100px">{{data.telephone}}</td>
-                        <td style="width: 100px">{{data.email}}</td>
-                        <td style="width:150px">
-                            <button class="btn btn-info btn-xs" ng-click="click(data)"><i class="glyphicon glyphicon-edit"></i></button>
-                            <button class="btn btn-danger btn-xs" ng-click="remove(data.id)"><i class="glyphicon glyphicon-trash"></i></button>
-                        </td>
-                    </tr>
-
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="5" class="text-center">
-                <dir-pagination-controls boundary-links="true"></dir-pagination-controls>
-                </td>
-                </tr>
-                </tfoot>
-            </table>
-        </form>
+<md-toolbar class="md-table-toolbar md-default">
+  <div class="rowHd">
+    <div class="bg-light lter b-b wrapper-md col" style="height: 60px;">
+        <h1 class="m-n font-thin h3"><img src="images/logo.png" width="50" height="50">clientManager
+        </h1>
     </div>
-</div>
+    <div class="col" style="height: 60px; ">
+          <span class="btnGrpAlign">
+            <div class="btn-group btn-group-xs" role="group" aria-label="...">
+              <button id="btnEn" type="button" class="btn btn-primary active lang"
+                    >
+                <img src="images/us.png" alt="English">
+                En</button>
+              <button id="btnPt" type="button" class="btn btn-primary lang"
+                    >
+                <img src="images/br.png" alt="Portuguese">
+                Pt</button>
+            </div>
+          </span>
+    </div>
+  </div>
+
+  <div class="wrapper-md">
+      <div class="panel panel-default">
+          <div class="panel-heading" style="background-color: rgb(140,158,255);">
+              <input style="float: left; width: 200px; height: initial;" type="search" ng-model="search"
+              class="form-control input-sm inline m-r"
+              placeholder="Search for Client"/>
+              <div class="btn-group" style="float : right; right : 60px;">
+                <button type="button" key="actions" class="btn btn-primary tr">Actions</button>
+                <button type="button" class="btn btn-primary dropdown-toggle"
+                        data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                  <span class="caret"></span>
+                  <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu"
+                    style="background-color: #337ab7; min-width :145px;">
+                  <li>
+                    <button class="btn btn-primary tr"
+                              ng-click="create($event)"
+                              style="width: 145px;" key="create_client">
+                              <i class="fa fa-user-plus" aria-hidden="true"></i>
+                              Create Client</button>
+                  </li>
+                  <li><button class="btn btn-primary tr"
+                              ng-click="updateClient()"
+                              style="width: 145px;"
+                              ng-class="{'disabled': selected.length==0}"
+                              key="update_client">
+                              <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                              Update Client</button>
+                  </li>
+                  <li><button class="btn btn-primary"
+                              ng-click="remove(selected)"
+                              style="width: 145px;"
+                              ng-class="{'disabled': selected.length==0}">
+                              <i class="fa fa-user-times" aria-hidden="true"></i>
+                              Delete Clients</button>
+                  </li>
+
+                </ul>
+              </div>
+          </div>
+      </div>
+  </div>
+</md-toolbar>
+
+<md-table-container>
+  <table md-table md-row-select multiple ng-model="selected"
+        md-progress="promise">
+    <thead md-head md-order="query.order">
+      <tr md-row>
+        <th md-column md-order-by="name" key="name" class="tr"><span>Name</span></th>
+        <th md-column ><span key="address" class="tr">Address</span></th>
+        <th md-column md-numeric key="telephone" class="tr">Telephone</th>
+        <th md-column>Email</th>
+      </tr>
+    </thead>
+    <tbody md-body>
+      <tr md-row md-select="value" md-select-id="id" md-on-select="selectedRow"
+          md-auto-select ng-repeat="(key,value) in datas | filter: search |
+              orderBy: query.order
+              | limitTo: query.limit : (query.page - 1) * query.limit">
+        <td md-cell>{{value.name}}</td>
+        <td md-cell>{{value.address}}</td>
+        <td md-cell>{{value.telephone}}</td>
+        <td md-cell>{{value.email}}</td>
+      </tr>
+    </tbody>
+  </table>
+</md-table-container>
+
+<md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15]"
+  md-page="query.page"
+  md-total="{{datas.count}}"
+  md-page-select></md-table-pagination>
