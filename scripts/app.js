@@ -2,10 +2,10 @@
     'use strict';
     var _templateBase = './scripts';
 
-    var app = angular.module('tron-clientManager', [
-        'angularUtils.directives.dirPagination',
+    var app = angular.module('tronManager', [
         'services',
         'controllers',
+        'directives',
         'ngRoute',
         'md.data.table',
         'ngMdIcons'

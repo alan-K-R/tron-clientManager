@@ -3,13 +3,13 @@
 
     var app = angular.module('controllers', ['ngAnimate', 'ngMaterial']);
     app.controller('clientCtrl', function ($scope, clientService, $mdDialog,
-       $mdToast) {
+       $mdToast, $rootScope) {
         $scope.datas = [];
         $scope.button = 'Save';
         $scope.selected = [];
         $scope.client = {};
         showData();
-        $('#btnEn').addClass('active');
+        $('#btnPt').addClass('active');
 
         //language translation
         var aLangKeys=new Array();
@@ -19,32 +19,22 @@
       	aLangKeys['btnEn']['create_client']='Create Client';
       	aLangKeys['btnEn']['update_client']='Update Client';
         aLangKeys['btnEn']['name']='Name';
-        aLangKeys['btnEn']['address']='Address';
         aLangKeys['btnEn']['telephone']='Telephone';
+        aLangKeys['btnEn']['address']='Address';
 
         aLangKeys['btnPt']['actions']='Acoes';
       	aLangKeys['btnPt']['create_client']='Criar cliente';
       	aLangKeys['btnPt']['update_client']='Atualizar';
         aLangKeys['btnPt']['name']='Nome';
-        aLangKeys['btnPt']['address']='Endereço';
-        aLangKeys['btnPt']['telephone']='telefone';
+        aLangKeys['btnPt']['telephone']='Telefone';
+        aLangKeys['btnPt']['address']='Endereco';
 
         function showData() {
             clientService.select().then(function (response) {
                 $scope.datas = [].concat(response);
+                $scope.datas.count = $scope.datas.length;
             });
         }
-
-        // $scope.toggleActive = function(){
-        //    $('#btnEn').toggleClass('active');
-        //    $('#btnPt').toggleClass('active');
-        //
-        //   //  var lang = $(this).attr('id');
-        //   //  // translate all translatable elements
-        // 	// $('.tr').each(function(i){
-        // 	// $(this).text(aLangKeys[lang][ $(this).attr('key') ]);
-        // 	// });
-        // };
 
         $(document).ready(function() {
         	// onclick behavior
@@ -59,9 +49,20 @@
         	} );
         });
 
+        $scope.fileNameChanged = function(file) {
+            if(file){
+              for(var i = 0; i < file.files.length; i++){
+                $scope.client.image_location = file.files[i].path;
+              }
+            }
+          }
+
         $scope.refresh = function(){
           showData();
         }
+
+        $scope.selected = [];
+        $scope.limitOptions = [5, 10, 15];
 
         $scope.query = {
           order: 'name',
@@ -69,7 +70,12 @@
           page: 1
         };
 
-        $scope.create = function (ev){
+        $scope.logPagination = function (page, limit) {
+           console.log('page: ', page);
+           console.log('limit: ', limit);
+         }
+
+      $scope.create = function (ev){
           $scope.selected = [];
           $scope.client = {};
           $mdDialog.show({
@@ -114,7 +120,7 @@
             var email;
             if (r === true) {
               for (var i = 0; i < selection.length; i++){
-                email += selection[i].email;
+                email += selection[i].email + ", ";
                 clientService.delete(selection[i].id);
               }
                 showData();
@@ -152,6 +158,10 @@
           });
         };
 
+        $scope.cancel = function(){
+          $mdDialog.hide();
+        }
+
       }
 
 
@@ -175,6 +185,10 @@
           }else{
             //TODO: show mdtoast here
           }
+        }
+
+        $scope.cancel = function(){
+          $mdDialog.hide();
         }
       }
 

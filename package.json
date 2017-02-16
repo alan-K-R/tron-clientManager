@@ -1,10 +1,12 @@
 {
-  "name": "tron-clientManager",
+  "name": "tronManager",
   "version": "0.0.1",
-  "description": "An AngularJS desktop client Manager",
+  "description": "AngularJS desktop client Manager",
+  "author": "Allan Ruka <alan.ruka@gmail.com>",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+     "package": "electron-packager ./ tronClientManager --all --out ~/Desktop/SoundMachine --version 0.30.2 --overwrite --icon=./app/img/app-icon.icns"
   },
   "repository": "https://github.com/alan-K-R/tron-clientManager.git",
   "keywords": [
@@ -12,19 +14,18 @@
     "Management",
     "Desktop"
   ],
-  "author": "GitHub",
   "license": "MIT",
   "devDependencies": {
     "angular": "^1.6.1",
     "angular-animate": "^1.6.1",
     "angular-material": "^1.1.1",
+    "angular-material-data-table": "^0.10.10",
     "angular-route": "^1.6.1",
-    "angular-utils-pagination": "^0.11.1",
     "bootstrap": "^3.3.7",
     "electron": "^1.4.1",
+    "electron-packager": "^8.5.1",
     "font-awesome": "^4.7.0",
-    "jquery": "^3.1.1",
-    "angular-material-data-table": "^0.10.10"
+    "jquery": "^3.1.1"
   },
   "dependencies": {
     "express": "^4.14.0",

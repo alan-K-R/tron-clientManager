@@ -4,7 +4,7 @@
     var connection = req.createConnection({
         host: "127.0.0.1",
         user: "root",
-        password: "XXXX",
+        password: "XXXXXX",
         database: "clients"
     });
     var app = angular.module('services', []);
@@ -15,12 +15,14 @@
             return result(null, 'select * from client');
         };
         mysql.insert = function (data) {
-            return result([data.name, data.email, data.address, data.telephone],
-               'insert into client(name,email, address,telephone) values(?,?,?)');
+            return result([data.name, data.email, data.address,
+                          data.telephone, data.mobile, data.image_location, data.cpf, data.rg],
+               'insert into client(name, email, address, telephone, mobile, image_location, cpf, rg) values(?,?,?,?,?,?,?,?)');
         };
         mysql.update = function (data) {
-            return result([data.name, data.email, data.address, data.telephone, data.id],
-               'update client set name=?,email=?,address=?, telephone=? where id=?');
+            return result([data.name, data.email, data.address, data.telephone,
+                          data.mobile, data.image_location, data.cpf, data.rg, data.id],
+               'update client set name=?,email=?,address=?, telephone=?, mobile=?, image_location=? , cpf=?, rg=? where id=?');
         };
         mysql.delete = function (id) {
             var def = $q.defer();

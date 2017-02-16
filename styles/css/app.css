@@ -9,3 +9,7 @@
 .col .btnGrpAlign {
   float: right;
 }
+
+.imageFit {
+  overflow-x: hidden;
+}

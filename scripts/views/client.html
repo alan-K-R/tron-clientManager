@@ -7,7 +7,9 @@
     </div>
     <div class="col" style="height: 60px; ">
           <span class="btnGrpAlign">
-            <div class="btn-group btn-group-xs" role="group" aria-label="...">
+            <div class="btn-group btn-group-xs" role="group"
+                aria-label="translation"
+                style="padding-right: 5px;">
               <button id="btnEn" type="button" class="btn btn-primary active lang"
                     >
                 <img src="images/us.png" alt="English">
@@ -72,27 +74,35 @@
         md-progress="promise">
     <thead md-head md-order="query.order">
       <tr md-row>
-        <th md-column md-order-by="name" key="name" class="tr"><span>Name</span></th>
+        <th md-column md-order-by="name">
+          <span key="name" class="tr" >Name</span></th>
+        <th md-column>CPF</th>
         <th md-column ><span key="address" class="tr">Address</span></th>
         <th md-column md-numeric key="telephone" class="tr">Telephone</th>
         <th md-column>Email</th>
+        <th md-column>Receipt Image</th>
       </tr>
     </thead>
     <tbody md-body>
       <tr md-row md-select="value" md-select-id="id" md-on-select="selectedRow"
-          md-auto-select ng-repeat="(key,value) in datas | filter: search |
+          md-auto-select ng-repeat="value in datas | filter: search |
               orderBy: query.order
               | limitTo: query.limit : (query.page - 1) * query.limit">
         <td md-cell>{{value.name}}</td>
+        <td md-cell>{{value.cpf}}</td>
         <td md-cell>{{value.address}}</td>
         <td md-cell>{{value.telephone}}</td>
         <td md-cell>{{value.email}}</td>
+        <td md-cell ng-if="!value.image_location" ></td>
+        <td md-cell ng-if="value.image_location"><button open-image-dialog
+            client="value" class="btn btn-info btn-xs">
+            <i class="glyphicon glyphicon-folder-open">
+        </td>
       </tr>
     </tbody>
   </table>
 </md-table-container>
 
-<md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15]"
+<md-table-pagination md-limit="query.limit" md-limit-options="limitOptions"
   md-page="query.page"
-  md-total="{{datas.count}}"
-  md-page-select></md-table-pagination>
+  md-total="{{datas.count}}"></md-table-pagination>

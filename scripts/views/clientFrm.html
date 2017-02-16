@@ -14,13 +14,39 @@
 
             <!-- NAME -->
             <md-input-container class="md-block">
-                <label>Name</label>
+                <label key="name" class="tr" >Name</label>
                 <input md-maxlength="255" required name="name" ng-model="client.name" class="dialog-close">
                 <div ng-messages="clientFrm.name.$error">
                     <div ng-message="required">This is required.</div>
                     <div ng-message="md-maxlength">The name has to be less than 255 characters long.</div>
                 </div>
             </md-input-container>
+
+            <div layout-gt-sm="row">
+              <md-input-container class="md-block"  flex-gt-sm>
+                  <label>RG</label>
+                  <input name="rg" required ng-model="client.rg"
+                         md-minlength="10" md-maxlength="14" />
+              </md-input-container>
+              <md-input-container class="md-block"  flex-gt-sm>
+                  <label>Cpf</label>
+                  <input name="cpf" ng-model="client.cpf"
+                          md-maxlength="11" />
+              </md-input-container>
+            </div>
+
+            <div layout-gt-sm="row">
+              <md-input-container class="md-block"  flex-gt-sm>
+                  <label>Telephone Home</label>
+                  <input name="telhome" required ng-model="client.telephone"
+                         md-minlength="10" md-maxlength="14" />
+              </md-input-container>
+              <md-input-container class="md-block"  flex-gt-sm>
+                  <label>Telephone mobile</label>
+                  <input type="telephone" name="telephoneMobile" ng-model="client.mobile"
+                         md-minlength="10" md-maxlength="14" />
+              </md-input-container>
+            </div>
 
             <!-- Address -->
             <md-input-container class="md-block">
@@ -43,16 +69,19 @@
                     </div>
                 </div>
             </md-input-container>
-              <md-input-container class="md-block">
-                   <!-- <input id="input-file-id" type="file" accept="image/*" /> -->
-                   <input id="fileInput" type="file" class="ng-hide">
-                   <md-button id="uploadButton" class="md-raised md-primary" aria-label="attach_file">
-                         Choose file </md-button><md-input-container  md-no-float>    
-                           <input id="textInput" ng-model="fileName" type="text"
-                           placeholder="No file chosen" ng-readonly="true">
-                         </md-input-container>'
-                  <!-- <aps-upload-file></aps-upload-file> -->
-              </md-input-container>
+
+
+            <div>
+              <input id="fileInpt" type="file"
+                    ng-if="!client.image_location"
+                    name = "file"
+                    onchange="angular.element(this).scope().fileNameChanged(this)"
+                    class="md-raised md-primary"/>
+              <open-image-dialog client="client" ng-model="client"
+                                ng-if="client.image_location">
+              </open-image-dialog>
+            </div>
+
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end">
             <md-button ng-click="cancel()" type="button">

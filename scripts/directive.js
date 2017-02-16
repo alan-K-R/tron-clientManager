@@ -1,39 +1,49 @@
-angular.module('MyApp')
+// Code goes here
+angular.module('directives', ['ngMaterial'])
+    .directive('openImageDialog', ['$mdDialog', function($mdDialog) {
 
-.controller('AppCtrl', function($scope) {
+        return {
 
-}).directive('apsUploadFile', apsUploadFile);
+            template: '<label ng-click="imageDialog()" client="client">Receipt Of Payment</label>',
+            scope: {
+              client: '='
+            },
+            link: function(scope) {
+                scope.imageDialog = function() {
 
-function apsUploadFile() {
-  var directive = {
-    restrict: 'E',
-    template: '<input id="fileInput" type="file" class="ng-hide"> <md-button id="uploadButton" class="md-raised md-primary" aria-label="attach_file">    Choose file </md-button><md-input-container  md-no-float>    <input id="textInput" ng-model="fileName" type="text" placeholder="No file chosen" ng-readonly="true"></md-input-container>',
-    link: apsUploadFileLink
-  };
-  return directive;
-}
+                    $mdDialog.show({
+                        templateUrl: 'scripts/views/image.tmpl.html',
+                        parent: angular.element(document.body),
+                        scope: scope,
+                        clickOutsideToClose :true,
+                        preserveScope: true,
+                        controller: function($scope, $mdDialog, scope) {
 
-function apsUploadFileLink(scope, element, attrs) {
-  var input = $(element[0].querySelector('#fileInput'));
-  var button = $(element[0].querySelector('#uploadButton'));
-  var textInput = $(element[0].querySelector('#textInput'));
+                            $scope.hide = function() {
+                                $mdDialog.hide();
+                            };
 
-  if (input.length && button.length && textInput.length) {
-    button.click(function(e) {
-      input.click();
-    });
-    textInput.click(function(e) {
-      input.click();
-    });
-  }
+                            $scope.closeDialog = function(){
+                                $mdDialog.hide();
+                            }
 
-  input.on('change', function(e) {
-    var files = e.target.files;
-    if (files[0]) {
-      scope.fileName = files[0].name;
-    } else {
-      scope.fileName = null;
-    }
-    scope.$apply();
-  });
-}
+                            $scope.cancel = function() {
+
+                                $mdDialog.cancel();
+
+                            };
+
+                            $scope.answer = function(answer) {
+                                console.log($mdDialog.hide('answer'));
+                                $mdDialog.hide(answer);
+
+                            };
+                        }
+
+                    })
+                };
+
+            }
+
+        };
+    }]);

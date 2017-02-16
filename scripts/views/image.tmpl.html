@@ -1,0 +1,19 @@
+<div role="dialog" aria-label="receipt image!" layout="column" layout-align="center center">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>Image Receipt for Client</h2>
+    </div>
+  </md-toolbar>
+
+  <div class="demo-dialog-content">
+    <div layout="row" >
+      <img class ="imageFit" alt="receipt payment image" ng-src="{{client.image_location}}">
+    </div>
+  </div>
+
+  <div layout="row" class="demo-dialog-button">
+    <md-button md-autofocus flex class="md-primary" ng-click="closeDialog()">
+      Close
+    </md-button>
+  </div>
+</div>
